@@ -1,0 +1,65 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use 'sass:map';
+.InputText {
+    width: 100%;
+    display: block;
+    position: relative;
+    margin-bottom: 1rem;
+    &-icon {
+        position: absolute;
+        right: 1rem;
+        top: 3.3rem;
+        height: 2.4rem;
+        width: 2.4rem;
+        &.isLoadingIcon {
+            color: map.get($map: var.$colors, $key: color-gray);
+            @include mix.animate(rotateicon, 1s, linear, 1);
+        }
+        &.isSuccessIcon {
+            color: map.get($map: var.$colors, $key: color-green);
+        }
+        &.errorIcon {
+            color: map.get($map: var.$colors, $key: color-red);
+        }
+    }
+    &-label {
+        font-size: var.$text-sm;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    &-error {
+        font-size: var.$text-sm;
+        color: map.get($map: var.$colors, $key: color-red);
+        padding-top: 0.5rem;
+    }
+    &-field {
+        width: 100%;
+        display: block;
+        background-color: map.get($map: var.$colors, $key: color-white);
+        color: map.get($map: var.$colors, $key: color-dark-gray);
+        padding-left: 1rem;
+        padding-right: 5rem;
+        border: none;
+        height: 4rem;
+        @include mix.radius($sm: true);
+        @include mix.shadow($sm: true);
+        @include mix.responsive(sm) {
+            margin-bottom: 0;
+        }
+        &:focus {
+            outline: none;
+            @include mix.shadow($md: true);
+        }
+        &--borderError {
+            outline: 1px solid map.get($map: var.$colors, $key: color-red);
+        }
+        &--borderError:focus {
+            outline: 1px solid map.get($map: var.$colors, $key: color-red);
+        }
+        &::placeholder {
+            color: map.get($map: var.$colors, $key: color-light-gray);
+        }
+    }
+}

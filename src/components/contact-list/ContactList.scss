@@ -1,0 +1,21 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use 'sass:map';
+.ContactList {
+    width: 100%;
+    max-width: 75rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+    &-title {
+        display: flex;
+        align-items: center;
+        color: map.get($map: var.$colors, $key: color-purple);
+        font-weight: 800;
+        margin-bottom: 2rem;
+    }
+    &-icon {
+        width: max-content;
+        margin-right: 1rem;
+    }
+}

@@ -1,0 +1,23 @@
+import { ContactFormsContext } from '../../Contexts/ContactFormsContext';
+import { useSelectedForm } from '../../hooks/useSelectedForm';
+const ContactFormsProvider = ({ resetFilters, reloadContacts, children }) => {
+    const { setCloseForm, ...restSelectedForm } = useSelectedForm();
+    const onSuccess = () => {
+        resetFilters();
+        reloadContacts();
+        setCloseForm();
+    };
+    return (
+        <ContactFormsContext.Provider
+            value={{
+                setCloseForm,
+                onSuccess,
+                ...restSelectedForm
+            }}
+        >
+            {children}
+        </ContactFormsContext.Provider>
+    );
+};
+
+export default ContactFormsProvider;

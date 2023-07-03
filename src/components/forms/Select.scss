@@ -1,0 +1,37 @@
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use '../../scss/abstracts/variables.scss' as var;
+@use 'sass:map';
+.Select {
+    width: 100%;
+    position: relative;
+    @include mix.responsive(sm) {
+        width: 30%;
+    }
+    &-input {
+        width: 100%;
+        background-color: map.get($map: var.$colors, $key: color-white);
+        color: map.get($map: var.$colors, $key: color-gray);
+        padding: 0 3rem 0 1.6rem;
+        height: 4rem;
+        border: none;
+        outline: none;
+        appearance: none;
+        @include mix.shadow($sm: true);
+        @include mix.radius($sm: true);
+        &:focus {
+            @include mix.shadow($md: true);
+        }
+        @include mix.hover {
+            cursor: pointer;
+        }
+    }
+    &-icon {
+        pointer-events: none;
+        width: 2.4rem;
+        height: 2.4rem;
+        top: 0.8rem;
+        right: 0;
+        position: absolute;
+        color: map.get($map: var.$colors, $key: color-gray);
+    }
+}

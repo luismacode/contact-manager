@@ -1,0 +1,17 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use 'sass:map';
+.ContactStatus {
+    display: flex;
+    align-items: center;
+    &.is-available {
+        color: map.get($map: var.$colors, $key: color-green);
+    }
+    &.is-unavailable {
+        color: map.get($map: var.$colors, $key: color-red);
+    }
+    &-icon {
+        width: 2.2rem;
+        height: 2.2rem;
+        margin-right: 0.2rem;
+    }
+}

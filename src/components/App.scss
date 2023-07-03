@@ -1,0 +1,7 @@
+@use '../scss/abstracts/variables.scss' as var;
+@use 'sass:map';
+.App {
+    background-color: map.get($map: var.$colors, $key: color-white);
+    color: map.get($map: var.$colors, $key: color-purple);
+    min-height: 100vh;
+}

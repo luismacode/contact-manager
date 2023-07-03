@@ -1,0 +1,23 @@
+@use '../../scss/abstracts/mixins.scss' as mix;
+
+.Form {
+    transform: translateY(5rem);
+    &-row {
+        display: flex;
+        flex-direction: column;
+        @include mix.responsive(md) {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+    &-status {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    &-select,
+    &-input {
+        margin-bottom: 2rem;
+    }
+}

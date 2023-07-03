@@ -1,0 +1,32 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use 'sass:map';
+
+.Button {
+    height: 4rem;
+    @include mix.shadow($sm: true);
+    @include mix.radius($sm: true);
+    padding: 0 1rem;
+    border: 1px solid transparent;
+    &--primary {
+        color: map.get($map: var.$colors, $key: color-white);
+        background-color: map.get($map: var.$colors, $key: color-purple);
+        border-color: map.get($map: var.$colors, $key: color-purple);
+    }
+    &--secondary {
+        color: map.get($map: var.$colors, $key: color-gray);
+        background-color: map.get($map: var.$colors, $key: color-white);
+        border-color: map.get($map: var.$colors, $key: color-purple);
+    }
+    &:focus {
+        @include mix.shadow($md: true);
+    }
+    &:disabled {
+        background-color: map.get($map: var.$colors, $key: color-white);
+        color: map.get($map: var.$colors, $key: color-light-gray);
+        border-color: map.get($map: var.$colors, $key: color-light-gray);
+    }
+    @include mix.hover {
+        cursor: pointer;
+    }
+}

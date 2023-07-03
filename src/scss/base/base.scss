@@ -1,0 +1,22 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use 'sass:map';
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: map.get($map: var.$fonts, $key: font1);
+}
+
+body {
+    font-family: map.get($map: var.$fonts, $key: font2);
+}
+@for $i from 1 through 4 {
+    h#{$i} {
+        font-size: var.$base + var.$scale * (4 - $i);
+        @include mix.responsive(xl) {
+            font-size: var.$base + var.$scale-xl * (4 - $i);
+        }
+    }
+}

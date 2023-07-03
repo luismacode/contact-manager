@@ -1,0 +1,23 @@
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use '../../scss/abstracts/variables.scss' as var;
+@use 'sass:map';
+.FormContainer {
+    margin-bottom: 2rem;
+    padding: 1.6rem;
+    width: 100%;
+    position: relative;
+    height: 100vh;
+    width: 92%;
+    background-color: map.get($map: var.$colors, $key: color-white);
+    @include mix.responsive(md) {
+        width: 60%;
+    }
+    @include mix.responsive(xl) {
+        width: 35%;
+    }
+    &-close {
+        position: absolute;
+        top: 1.5rem;
+        right: -1.5rem;
+    }
+}

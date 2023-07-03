@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+html {
+    font-size: 10px;
+}
+body {
+    font-size: 1.6rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+}
+
+img,
+picture,
+video,
+iframe,
+figure {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+}
+
+a {
+    color: inherit;
+    display: block;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+strong,
+blockquote,
+i,
+b,
+u,
+em {
+    color: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+    content: '';
+    content: none;
+}
+
+::selection {
+    background-color: #9b9393;
+    color: #fff;
+}
+
+form,
+input,
+textarea,
+select,
+button,
+label {
+    background-color: transparent;
+    color: inherit;
+    display: block;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+table,
+tr,
+td {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+span {
+    display: inline-block;
+}
+
+svg {
+    display: block;
+    width: 100%;
+}

@@ -1,0 +1,51 @@
+@use './variables.scss' as var;
+@use 'sass:map';
+
+@mixin hover {
+    @media (hover: hover) {
+        &:hover {
+            @content;
+        }
+    }
+}
+
+@mixin responsive($term) {
+    @if map-has-key(var.$breakpoints, $term) {
+        $breakpoint: map.get(var.$breakpoints, $term);
+        @media screen and (min-width: $breakpoint) {
+            @content;
+        }
+    } @else {
+        @media screen and (min-width: $key) {
+            @content;
+        }
+    }
+}
+
+@mixin shadow($sm: false, $md: false) {
+    @if ($sm) {
+        box-shadow: var.$shadow-sm;
+    }
+    @if ($md) {
+        box-shadow: var.$shadow-md;
+    }
+}
+
+@mixin radius($sm: false, $md: false) {
+    @if ($sm) {
+        border-radius: var.$radius-sm;
+    }
+    @if ($md) {
+        border-radius: var.$radius-md;
+    }
+}
+
+@mixin animate($animation, $duration, $timing, $times) {
+    animation: $animation $duration $timing $times;
+}
+
+@mixin keyframes($name) {
+    @keyframes #{$name} {
+        @content;
+    }
+}

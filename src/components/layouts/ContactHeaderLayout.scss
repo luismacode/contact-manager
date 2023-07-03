@@ -1,0 +1,9 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use 'sass:map';
+
+.ContactHeader {
+    display: flex;
+    background-color: map.get($map: var.$colors, $key: color-purple);
+    padding: 1rem 2rem;
+}

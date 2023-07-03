@@ -1,0 +1,17 @@
+@use '../../scss/abstracts/mixins.scss' as mix;
+
+.Form {
+    transform: translateY(5rem);
+    &-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        @include mix.responsive(md) {
+            flex-direction: row;
+            justify-content: start;
+        }
+    }
+    &-question {
+        margin-bottom: 2rem;
+    }
+}

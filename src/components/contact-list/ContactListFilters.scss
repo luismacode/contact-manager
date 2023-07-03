@@ -1,0 +1,48 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use 'sass:map';
+.Filters {
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 1rem;
+    font-size: var.$text-sm;
+    background-color: map.get($map: var.$colors, $key: color-purple);
+    color: map.get($map: var.$colors, $key: color-white);
+    @include mix.shadow($sm: true);
+    margin-bottom: 2rem;
+    @include mix.radius($md: true);
+    @include mix.responsive(sm) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+    &-status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &-checkbox {
+        margin-right: 0.5rem;
+    }
+    &-select {
+        margin-bottom: 2rem;
+        @include mix.responsive(sm) {
+            margin-bottom: 0;
+        }
+    }
+    &-icon {
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        border-radius: 50%;
+    }
+    &-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+}

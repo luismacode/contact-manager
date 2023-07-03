@@ -1,0 +1,50 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use 'sass:map';
+.ContactRow {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid map.get($map: var.$colors, $key: color-gray);
+    @include mix.shadow($sm: true);
+    padding: 5rem 1rem 1rem 1rem;
+    @include mix.radius($md: true);
+    background-color: map.get($map: var.$colors, $key: color-white);
+    margin-bottom: 1rem;
+    font-size: var.$text-sm;
+    &-name {
+        font-weight: 700;
+    }
+    &-role {
+        position: absolute;
+        top: 0.3rem;
+        left: 1rem;
+        text-transform: uppercase;
+        font-size: 1rem;
+        font-weight: 700;
+        color: map.get($map: var.$colors, $key: color-white);
+    }
+    &-status {
+        width: max-content;
+    }
+    &-info {
+        width: 100%;
+        padding: 0.8rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 300;
+    }
+    &-phone {
+        font-weight: 500;
+    }
+    &-action {
+        display: flex;
+        gap: 1rem;
+        position: absolute;
+        top: 0.5rem;
+        right: 1rem;
+    }
+}
