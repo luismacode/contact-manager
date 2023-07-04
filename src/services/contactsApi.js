@@ -1,6 +1,6 @@
 export const createContact = async contact => {
     try {
-        const res = await fetch('http://localhost:4000/contacts', {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -16,7 +16,7 @@ export const createContact = async contact => {
 export const updateContact = async contact => {
     try {
         const res = await fetch(
-            `http://localhost:4000/contacts/${contact.id}`,
+            `${import.meta.env.VITE_BASE_URL}/${contact.id}`,
             {
                 method: 'PATCH',
                 headers: {
@@ -33,9 +33,12 @@ export const updateContact = async contact => {
 
 export const deleteByContact = async contactId => {
     try {
-        const res = await fetch(`http://localhost:4000/contacts/${contactId}`, {
-            method: 'DELETE'
-        });
+        const res = await fetch(
+            `${import.meta.env.VITE_BASE_URL}/${contactId}`,
+            {
+                method: 'DELETE'
+            }
+        );
         return res.ok;
     } catch {
         return false;
@@ -43,7 +46,9 @@ export const deleteByContact = async contactId => {
 };
 export const findAllContacts = async signal => {
     try {
-        const res = await fetch('http://localhost:4000/contacts', { signal });
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}`, {
+            signal
+        });
         let contacts;
         if (res.ok) contacts = await res.json();
         return {
@@ -64,8 +69,10 @@ export const findAllContacts = async signal => {
 export const findContactByEmail = async (email, signal) => {
     try {
         const res = await fetch(
-            `http://localhost:4000/contacts?email=${email}`,
-            { signal }
+            `${import.meta.env.VITE_BASE_URL}?email=${email}`,
+            {
+                signal
+            }
         );
         let contact;
         if (res.ok) {
@@ -90,7 +97,9 @@ export const findContactByEmail = async (email, signal) => {
 export const findContactByPhone = async (phone, signal) => {
     try {
         const res = await fetch(
-            `http://localhost:4000/contacts?phone=${encodeURIComponent(phone)}`,
+            `${import.meta.env.VITE_BASE_URL}?phone=${encodeURIComponent(
+                phone
+            )}`,
             { signal }
         );
         let contact;

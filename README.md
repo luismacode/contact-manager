@@ -109,8 +109,8 @@ The app must be compatible with modern browsers Chrome, Firefox, and Safari.
 Regarding persistence and access to data:
 
 - All data must be persisted in a single JSON file.
-- Said file must be consulted and modified through an API, generated using the json-server package.
-- The server created with json-server should listen on port 4003.
+- Said file must be consulted and modified through an API, generated using the json-server package that will be hosted in a cloud docker container.
+- The server created with json-server listen on port 4000.
 - All API calls should be handled using the native fetch tool.
 - The API should only be used to retrieve item data and persist new changes, not for filtering. The server must return the data of all the elements and the filtering must be done on the client.
 
