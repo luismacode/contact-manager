@@ -20,7 +20,7 @@ const ContactListPagination = ({
                 <option value={6}>6</option>
                 <option value={8}>8</option>
             </Select>
-            <p>Items Per Page</p>
+            <p>Per Page</p>
         </div>
         <PageSelector page={page} setPage={setPage} totalPages={totalPages} />
     </div>

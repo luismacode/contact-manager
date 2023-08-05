@@ -20,12 +20,12 @@ const ContactRow = ({ id, name, isAvailable, role, email, phone }) => {
             <div className='ContactRow-role'>
                 <ContactRole role={role} />
             </div>
-            <div className='ContactRow-info'>
+            <div className='ContactRow-email'>
                 <span>{email}</span>
-                <div className='ContactRow-phone'>
-                    <span>{`( ${phone.substring(0, 3)} )`}</span>{' '}
-                    <span>{phone.substring(4)}</span>
-                </div>
+            </div>
+            <div className='ContactRow-phone'>
+                <span>{`( ${phone.substring(0, 3)} )`}</span>{' '}
+                <span>{phone.substring(4)}</span>
             </div>
             <div className='ContactRow-action'>
                 <IconButton

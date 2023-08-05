@@ -16,7 +16,7 @@
             @content;
         }
     } @else {
-        @media screen and (min-width: $key) {
+        @media screen and (min-width: $term) {
             @content;
         }
     }

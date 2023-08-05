@@ -3,19 +3,27 @@
 @use 'sass:map';
 .ContactRow {
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     border: 1px solid map.get($map: var.$colors, $key: color-gray);
     @include mix.shadow($sm: true);
-    padding: 5rem 1rem 1rem 1rem;
+    padding: 2.5rem 1rem 1rem 1rem;
     @include mix.radius($md: true);
     background-color: map.get($map: var.$colors, $key: color-white);
     margin-bottom: 1rem;
     font-size: var.$text-sm;
+    @include mix.responsive(sm) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @include mix.responsive(md) {
+        grid-template-columns: repeat(4, 1fr) 9rem;
+    }
     &-name {
         font-weight: 700;
+        @include mix.responsive(sm) {
+            width: max-content;
+            grid-column: 1/2;
+        }
     }
     &-role {
         position: absolute;
@@ -27,24 +35,45 @@
         color: map.get($map: var.$colors, $key: color-white);
     }
     &-status {
-        width: max-content;
+        text-align: right;
+        @include mix.responsive(sm) {
+            width: max-content;
+            grid-column: 2/3;
+        }
     }
-    &-info {
-        width: 100%;
-        padding: 0.8rem 0;
+    &-email {
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-weight: 300;
+        @include mix.responsive(sm) {
+            width: max-content;
+            grid-column: 3/4;
+        }
     }
     &-phone {
+        display: flex;
+        justify-content: end;
         font-weight: 500;
+        @include mix.responsive(sm) {
+            width: 100%;
+            grid-column: 4/5;
+        }
+        @include mix.responsive(md) {
+            justify-content: start;
+        }
     }
     &-action {
+        padding-top: 1rem;
         display: flex;
         gap: 1rem;
-        position: absolute;
-        top: 0.5rem;
-        right: 1rem;
+        @include mix.responsive(sm) {
+            grid-column: 1/2;
+        }
+        @include mix.responsive(md) {
+            padding-top: 0;
+            justify-content: end;
+            grid-column: 5/6;
+        }
     }
 }
