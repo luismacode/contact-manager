@@ -1,0 +1,8 @@
+@use '../../scss/abstracts/mixins.scss' as mix;
+
+.ContactListRows {
+    @include mix.responsive(md) {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

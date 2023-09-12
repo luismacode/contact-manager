@@ -9,8 +9,11 @@ import { getContactsToDisplay } from '../../lib/filterContacts';
 import ContactFormContainer from '../contact-forms/ContactFormContainer';
 import Modal from '../modal/Modal';
 import ContactFormsProvider from '../providers/ContactFormsProvider';
+import ContactListViewSelector from './ContactListViewSelector';
+import { useState } from 'react';
 
 const ContactList = () => {
+    const [view, setView] = useState(true);
     const {
         filters,
         pagination,
@@ -28,11 +31,13 @@ const ContactList = () => {
 
     return (
         <div className='ContactList'>
-            <h1 className='ContactList-title'>
-                <UsersIcon className='ContactList-icon' />
-                <span>Contact List</span>
-            </h1>
-
+            <div className='ContactList-header'>
+                <h1 className='ContactList-title'>
+                    <UsersIcon className='ContactList-icon' />
+                    <span>Contact List</span>
+                </h1>
+                <ContactListViewSelector view={view} setView={setView} />
+            </div>
             <ContactFormsProvider
                 reloadContacts={reloadContacts}
                 resetFilters={resetFilters}
@@ -46,6 +51,7 @@ const ContactList = () => {
                     contacts={paginatedContacts}
                     hasError={contactHasError}
                     isLoading={contactIsLoading}
+                    view={view}
                 />
             </ContactFormsProvider>
 

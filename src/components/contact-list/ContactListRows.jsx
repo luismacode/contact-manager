@@ -1,14 +1,18 @@
+import './ContactListRows.scss';
 import ContactRow from './ContactRow';
-
-const ContactListRows = ({ contacts, hasError, isLoading }) => {
+import ContactCard from './ContactCard';
+const ContactListRows = ({ contacts, hasError, isLoading, view }) => {
     if (hasError) return <p>Error loading contacts</p>;
-    if (isLoading) return <span>contacts Loading.....</span>;
-    if (!contacts.length)
-        return <p className='ContactList-none'>No contacts </p>;
-
-    return contacts.map(contact => (
-        <ContactRow key={contact.id} {...contact} />
-    ));
+    if (isLoading) return <span> Loading.....</span>;
+    if (!contacts.length) return <span> Loading.....</span>;
+    const ContactComponent = view ? ContactRow : ContactCard;
+    return (
+        <div className='ContactListRows'>
+            {contacts.map(contact => (
+                <ContactComponent key={contact.id} {...contact} />
+            ))}
+        </div>
+    );
 };
 
 export default ContactListRows;

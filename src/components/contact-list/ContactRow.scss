@@ -5,6 +5,7 @@
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    align-items: center;
     border: 1px solid map.get($map: var.$colors, $key: color-gray);
     @include mix.shadow($sm: true);
     padding: 2.5rem 1rem 1rem 1rem;
@@ -16,6 +17,7 @@
         grid-template-columns: repeat(4, 1fr);
     }
     @include mix.responsive(md) {
+        width: 100%;
         grid-template-columns: repeat(4, 1fr) 9rem;
     }
     &-name {
@@ -60,7 +62,8 @@
             grid-column: 4/5;
         }
         @include mix.responsive(md) {
-            justify-content: start;
+            justify-content: center;
+            align-items: center;
         }
     }
     &-action {

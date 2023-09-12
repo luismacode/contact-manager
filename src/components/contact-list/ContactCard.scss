@@ -1,0 +1,59 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use 'sass:map';
+.ContactCard {
+    margin-bottom: 1rem;
+    @include mix.responsive(md) {
+        width: 50%;
+        padding: 0.5rem;
+        margin-bottom: 0;
+    }
+    &-inner {
+        position: relative;
+        font-size: var.$text-sm;
+        border: 1px solid map.get($map: var.$colors, $key: color-gray);
+        @include mix.shadow($sm: true);
+        @include mix.radius($md: true);
+        background-color: map.get($map: var.$colors, $key: color-white);
+        padding: 0 1rem 2rem 1rem;
+    }
+    &-name {
+        font-weight: 700;
+    }
+    &-status {
+        font-weight: 500;
+    }
+    &-role {
+        position: absolute;
+        top: 0.3rem;
+        left: 1rem;
+        text-transform: uppercase;
+        font-size: 1rem;
+        font-weight: 700;
+        color: map.get($map: var.$colors, $key: color-white);
+    }
+    &-action {
+        display: flex;
+        gap: 1rem;
+        position: absolute;
+        bottom: 2rem;
+        left: 1rem;
+    }
+    &-email {
+        font-weight: 300;
+    }
+    &-flex {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 3rem;
+    }
+    &-info {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 0.6rem;
+    }
+    &-phone {
+        font-weight: 500;
+    }
+}

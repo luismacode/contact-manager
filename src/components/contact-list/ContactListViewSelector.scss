@@ -1,0 +1,28 @@
+@use '../../scss/abstracts/variables.scss' as var;
+@use '../../scss/abstracts/mixins.scss' as mix;
+@use 'sass:map';
+.ViewSelector {
+    display: none;
+    @include mix.responsive(md) {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+    &-icon {
+        height: 3rem;
+        width: 3rem;
+    }
+    &-button {
+        color: map.get($map: var.$colors, $key: color-purple);
+        &:disabled {
+            color: map.get($map: var.$colors, $key: color-light-gray);
+        }
+    }
+    &-divider {
+        margin: 0 1rem;
+        height: 2.5rem;
+        width: 0.2rem;
+        background-color: map.get($map: var.$colors, $key: color-purple);
+    }
+}
