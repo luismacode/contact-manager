@@ -4,7 +4,7 @@ import ContactRole from '../contact/ContactRole';
 import ContactStatus from '../contact/ContactStatus';
 import PencilIcon from '../icons/PencilIcon';
 import TrashIcon from '../icons/TrashIcon';
-import './ContactRow.scss';
+import './ContactCard.scss';
 import { ContactFormsContext } from '../../Contexts/ContactFormsContext';
 
 const ContactCard = ({ id, name, isAvailable, role, email, phone }) => {
