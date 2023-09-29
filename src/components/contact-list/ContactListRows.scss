@@ -6,3 +6,13 @@
         flex-wrap: wrap;
     }
 }
+
+.ContactListAlert {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    &-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+}
