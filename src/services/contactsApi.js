@@ -49,8 +49,8 @@ export const deleteByContact = async contactId => {
 
 const SORT_MAPPER = {
     [SORTOPTIONS.NAME]: ['name', 'asc'],
-    [SORTOPTIONS.ROLE]: ['isAvailable', 'desc'],
-    [SORTOPTIONS.AVAILABLE]: ['role', 'asc']
+    [SORTOPTIONS.ROLE]: ['role', 'asc'],
+    [SORTOPTIONS.AVAILABLE]: ['isAvailable', 'desc']
 };
 const getFindAllUrl = ({
     page,

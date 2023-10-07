@@ -18,12 +18,7 @@ const ContactListRows = ({ contacts, hasError, isLoading, showRowsFormat }) => {
             </p>
         );
     if (!contacts.length)
-        return (
-            <p className='ContactListAlert'>
-                <UpdateIcon className='ContactListAlert-icon' />
-                Loading
-            </p>
-        );
+        return <p className='ContactListAlert'>No contacts</p>;
     const ContactComponent = showRowsFormat ? ContactRow : ContactCard;
     return (
         <div className='ContactListRows'>
