@@ -1,39 +1,44 @@
 import { useState, useEffect } from 'react';
 import { findAllContacts } from '../services/contactsApi';
 
-export const useContacts = () => {
+export const useContacts = filters => {
     const [contacts, setContacts] = useState({
         data: [],
+        count: 0,
         hasError: false,
         isLoading: true
     });
-    const setData = newData =>
-        setContacts({ data: newData, isLoading: false, hasError: false });
+    const setData = (newData, newCount) =>
+        setContacts({
+            data: newData,
+            count: newCount,
+            isLoading: false,
+            hasError: false
+        });
     const setHasError = () =>
-        setContacts({ data: [], isLoading: false, hasError: true });
-    const reloadContacts = () =>
-        setContacts({ data: [], isLoading: true, hasError: false });
+        setContacts({ data: [], count: 0, isLoading: false, hasError: true });
 
     useEffect(() => {
-        if (!contacts.isLoading) return;
         const controller = new AbortController();
-        loadContacts(setData, setHasError, controller.signal);
+        loadContacts(setData, setHasError, controller.signal, filters);
         return () => {
             controller.abort();
         };
-    }, [contacts.isLoading]);
-
+    }, [filters]);
     return {
         contacts: contacts.data,
+        totalContacts: contacts.count,
         contactHasError: contacts.hasError,
-        ContactIsLoading: contacts.isLoading,
-        reloadContacts
+        ContactIsLoading: contacts.isLoading
     };
 };
 
-const loadContacts = async (setData, setHasError, signal) => {
-    const { contacts, isAborted } = await findAllContacts(signal);
+const loadContacts = async (setData, setHasError, signal, filters) => {
+    const { contacts, count, isAborted } = await findAllContacts(
+        signal,
+        filters
+    );
     if (isAborted) return;
-    if (contacts) return setData(contacts);
+    if (contacts) return setData(contacts, count);
     setHasError();
 };

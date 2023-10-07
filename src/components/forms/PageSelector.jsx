@@ -4,7 +4,7 @@ import ArrowRightIcon from '../icons/ArrowRightIcon';
 import './PageSelector.scss';
 const PageSelector = ({ page, setPage, totalPages }) => {
     const isFirstPage = page === 1;
-    const isLastPage = page === totalPages;
+    const isLastPage = page === totalPages || totalPages === 0;
     return (
         <div className='PageSelector'>
             <IconButton
@@ -16,7 +16,7 @@ const PageSelector = ({ page, setPage, totalPages }) => {
                 title='move to left'
             />
             <span>
-                Page {page} of {totalPages}
+                Page {page} of {totalPages || 1}
             </span>
             <IconButton
                 color='purple'

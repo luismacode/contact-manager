@@ -1,8 +1,10 @@
 # Contact-Manager
 
-The development will consist of the creation of a Contact manager.
+The development will consist of the creation of a Contact manager for sales business.
 
 - The contacts will be presented in paginated views and will be allowed to filter them as well as operations of creation, editing and deletion of contacts.
+
+-The goal of the development will be the presentation and validation of contact information.
 
 ## Project Stages
 
@@ -13,7 +15,7 @@ In case of validating the initial idea, it is intended to iterate on this develo
 
 ## Definition Entities
 
-The system will handle a single "contact" entity composed of the following fields.
+The system will handle a single "Contact" entity composed of the following fields.
 
  Name
 
@@ -51,9 +53,14 @@ Status
 
 The functional and non-functional requirements of the first functional version of the application are detailed.
 
+During these requirements we will talk about:
+
+- User: Person using the App.
+- Item: The Contact (User that is part of the system)that will be presented in the main interface of the application.
+
 ### Functional requirements
 
-- The items will be presented to the contact in card format.
+- The items will be presented to the user in table or card format according to the user's choice.
 - The user will be able to filter the elements based on the following criteria:
   - Filter by name: text that allows to show only those elements whose "Name" contains the search term, in any position. This filter will not be case-sensitive.
   - Filter by status: Filter to show only available.
@@ -61,8 +68,8 @@ The functional and non-functional requirements of the first functional version o
 The user will be able to sort the items based on the following criteria:
 
 - Default: The order of creation of the elements.
-- By name, ascending alphabetic: Sorted alphabetically (a-z).
-- By role: Sorted by role. First "Customer", second "Sponsor" , then "Supplier" finally "other".
+- By name: Sorted alphabetically (a-z).
+- By role: Sorted by role."Customer", "Other", "Sponsor" and "Supplier" respectively .
 - By status: By its state, first Available and then Unavailable.
 
 The user will not be able to simultaneously use the available items filter and the order by status.
@@ -70,7 +77,7 @@ The user will not be able to simultaneously use the available items filter and t
 - If the availables elements filter is previously marked, it will not be possible to sort the elements by status.
 - In case of being previously sorted by status, checking the filter of available elements will return the default order and this sorting option will not be available.
 
-The item table will be presented to the user in paginated format.
+The items will be presented to the user in paginated format.
 
 - The default size of the page will be 6 elements per page.
 - The user will be able to modify this size between three possible values, 4, 6 and 8 elements per page.
@@ -109,10 +116,9 @@ The app must be compatible with modern browsers Chrome, Firefox, and Safari.
 Regarding persistence and access to data:
 
 - All data must be persisted in a single JSON file.
-- Said file must be consulted and modified through an API, generated using the HTTP server (json-server) that will be hosted in render (web service).
-- The server created listen on port 4000.
+- Said file must be consulted and modified through an API, generated using json-server that will be hosted in cloud.
 - All API calls should be handled using the native fetch tool.
-- The API should only be used to retrieve item data and persist new changes, not for filtering. The server must return the data of all the elements and the filtering must be done on the client.
+- The API should be used to retrieve item and persist new changes. The server must return the data of all the elements.The tasks of filtering, sorting and paging of elements will be performed directly on the server, using the API instead of on the client.
 
 Regarding the visual section:
 
@@ -122,7 +128,7 @@ Regarding the visual section:
 
 Regarding CSS:
 
-- All CSS implementation must be done natively, using CSS or SCSS.
+- All CSS implementation must be done natively, using CSS or SCSS without frameworks css.
 - Only the use of CSS/SCSS modules is allowed.
 
 ### Additional requirements

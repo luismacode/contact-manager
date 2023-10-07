@@ -1,14 +1,14 @@
 import GridIcon from '../icons/GridIcon';
 import ListIcon from '../icons/ListIcon';
 import './ContactListViewSelector.scss';
-const ContactListViewSelector = ({ view, setView }) => (
+const ContactListViewSelector = ({ showRowsFormat, setShowRowsFormat }) => (
     <div className='ViewSelector'>
         <button
             type='button'
             title='grid'
             className='ViewSelector-button'
-            onClick={() => setView(false)}
-            disabled={!view}
+            onClick={() => setShowRowsFormat(false)}
+            disabled={!showRowsFormat}
         >
             <GridIcon className='ViewSelector-icon' />
         </button>
@@ -17,8 +17,8 @@ const ContactListViewSelector = ({ view, setView }) => (
             type='button'
             title='list'
             className='ViewSelector-button'
-            onClick={() => setView(true)}
-            disabled={view}
+            onClick={() => setShowRowsFormat(true)}
+            disabled={showRowsFormat}
         >
             <ListIcon className='ViewSelector-icon' />
         </button>

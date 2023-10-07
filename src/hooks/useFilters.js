@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { SORTOPTIONS } from '../constants/sortOptions';
+import { PAGINATION } from '../constants/pagination';
 const INITIAL_STATE = {
     search: '',
     onlyAvailable: false,
     sortBy: SORTOPTIONS.DEFAULT,
-    page: 1,
-    itemsPerPage: 6
+    page: PAGINATION.DEFAULT_PAGE,
+    itemsPerPage: PAGINATION.DEFAULT_ITEMS_PER_PAGE
 };
 export const useFilters = () => {
     const [filters, setFilters] = useState(INITIAL_STATE);
 
-    const setSearch = search => setFilters({ ...filters, page: 1, search });
+    const setSearch = search =>
+        setFilters({ ...filters, page: PAGINATION.DEFAULT_PAGE, search });
     const setOnlyAvailable = onlyAvailable => {
         const newSortBy =
             onlyAvailable && filters.sortBy === SORTOPTIONS.AVAILABLE
@@ -19,30 +21,26 @@ export const useFilters = () => {
 
         setFilters({
             ...filters,
-            page: 1,
+            page: PAGINATION.DEFAULT_PAGE,
             sortBy: newSortBy,
             onlyAvailable
         });
     };
-    const setSortBy = sortBy => setFilters({ ...filters, page: 1, sortBy });
+    const setSortBy = sortBy =>
+        setFilters({ ...filters, page: PAGINATION.DEFAULT_PAGE, sortBy });
 
     const setPage = newPage => setFilters({ ...filters, page: newPage });
 
     const setItemsPerPage = newItemsPerPage =>
-        setFilters({ ...filters, page: 1, itemsPerPage: newItemsPerPage });
+        setFilters({
+            ...filters,
+            page: PAGINATION.DEFAULT_PAGE,
+            itemsPerPage: newItemsPerPage
+        });
 
-    const resetFilters = () => setFilters(INITIAL_STATE);
-    const { search, onlyAvailable, sortBy, page, itemsPerPage } = filters;
+    const resetFilters = () => setFilters({ ...INITIAL_STATE });
     return {
-        filters: {
-            search,
-            onlyAvailable,
-            sortBy
-        },
-        pagination: {
-            page,
-            itemsPerPage
-        },
+        filters,
         filterSetters: {
             setSearch,
             setOnlyAvailable,

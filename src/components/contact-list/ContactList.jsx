@@ -5,7 +5,6 @@ import { useFilters } from '../../hooks/useFilters';
 import './ContactList.scss';
 import ContactListPagination from './ContactListPagination';
 import { useContacts } from '../../hooks/useContacts';
-import { getContactsToDisplay } from '../../lib/filterContacts';
 import ContactFormContainer from '../contact-forms/ContactFormContainer';
 import Modal from '../modal/Modal';
 import ContactFormsProvider from '../providers/ContactFormsProvider';
@@ -13,22 +12,11 @@ import ContactListViewSelector from './ContactListViewSelector';
 import { useState } from 'react';
 
 const ContactList = () => {
-    const [view, setView] = useState(true);
-    const {
-        filters,
-        pagination,
-        filterSetters,
-        paginationSetters,
-        resetFilters
-    } = useFilters();
-    const { contacts, contactHasError, contactIsLoading, reloadContacts } =
-        useContacts();
-    const { paginatedContacts, totalPages } = getContactsToDisplay(
-        contacts,
-        filters,
-        pagination
-    );
-
+    const [showRowsFormat, setShowRowsFormat] = useState(true);
+    const { filters, filterSetters, paginationSetters, resetFilters } =
+        useFilters();
+    const { contacts, totalContacts, contactHasError, contactIsLoading } =
+        useContacts(filters);
     return (
         <div className='ContactList'>
             <div className='ContactList-header'>
@@ -36,29 +24,35 @@ const ContactList = () => {
                     <UsersIcon className='ContactList-icon' />
                     <span>Contact List</span>
                 </h1>
-                <ContactListViewSelector view={view} setView={setView} />
+                <ContactListViewSelector
+                    showRowsFormat={showRowsFormat}
+                    setShowRowsFormat={setShowRowsFormat}
+                />
             </div>
-            <ContactFormsProvider
-                reloadContacts={reloadContacts}
-                resetFilters={resetFilters}
-            >
-                <ContactListFilters {...filters} {...filterSetters} />
+            <ContactFormsProvider resetFilters={resetFilters}>
+                <ContactListFilters
+                    search={filters.search}
+                    onlyAvailable={filters.onlyAvailable}
+                    sortBy={filters.sortBy}
+                    {...filterSetters}
+                />
                 <Modal>
                     <ContactFormContainer />
                 </Modal>
 
                 <ContactListRows
-                    contacts={paginatedContacts}
+                    contacts={contacts}
                     hasError={contactHasError}
                     isLoading={contactIsLoading}
-                    view={view}
+                    showRowsFormat={showRowsFormat}
                 />
             </ContactFormsProvider>
 
             <ContactListPagination
-                {...pagination}
+                page={filters.page}
+                itemsPerPage={filters.itemsPerPage}
                 {...paginationSetters}
-                totalPages={totalPages}
+                totalContacts={totalContacts}
             />
         </div>
     );

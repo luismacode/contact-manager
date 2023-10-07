@@ -13,6 +13,9 @@
         height: 3rem;
         width: 3rem;
     }
+    &-button:focus &-icon {
+        outline: 1px solid map-get($map: var.$colors, $key: color-light-gray);
+    }
     &-button {
         color: map.get($map: var.$colors, $key: color-purple);
         &:disabled {

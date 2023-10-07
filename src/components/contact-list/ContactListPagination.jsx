@@ -1,3 +1,4 @@
+import { PAGINATION } from '../../constants/pagination';
 import PageSelector from '../forms/PageSelector';
 import Select from '../forms/Select';
 import './ContactListPagination.scss';
@@ -6,7 +7,7 @@ const ContactListPagination = ({
     itemsPerPage,
     setPage,
     setItemsPerPage,
-    totalPages
+    totalContacts
 }) => (
     <div className='ContactListPagination'>
         <div className='ContactListPagination-itemsPerPage'>
@@ -16,13 +17,19 @@ const ContactListPagination = ({
                 title='pagination'
                 className='ContactListPagination-select'
             >
-                <option value={4}>4</option>
-                <option value={6}>6</option>
-                <option value={8}>8</option>
+                {PAGINATION.ITEMS_PER_PAGE_VALUES.map(value => (
+                    <option key={value} value={value}>
+                        {value}
+                    </option>
+                ))}
             </Select>
             <p>Per Page</p>
         </div>
-        <PageSelector page={page} setPage={setPage} totalPages={totalPages} />
+        <PageSelector
+            page={page}
+            setPage={setPage}
+            totalPages={Math.ceil(totalContacts / itemsPerPage)}
+        />
     </div>
 );
 

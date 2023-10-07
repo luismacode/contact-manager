@@ -3,7 +3,7 @@ import ContactRow from './ContactRow';
 import ContactCard from './ContactCard';
 import UpdateIcon from '../icons/UpdateIcon';
 import CrossCircleIcon from '../icons/CrossCircleIcon';
-const ContactListRows = ({ contacts, hasError, isLoading, view }) => {
+const ContactListRows = ({ contacts, hasError, isLoading, showRowsFormat }) => {
     if (hasError)
         return (
             <p className='ContactListAlert'>
@@ -24,7 +24,7 @@ const ContactListRows = ({ contacts, hasError, isLoading, view }) => {
                 Loading
             </p>
         );
-    const ContactComponent = view ? ContactRow : ContactCard;
+    const ContactComponent = showRowsFormat ? ContactRow : ContactCard;
     return (
         <div className='ContactListRows'>
             {contacts.map(contact => (

@@ -11,6 +11,9 @@
     @include mix.hover {
         cursor: pointer;
     }
+    &:focus {
+        @include mix.shadow($md: true);
+    }
     &:disabled {
         cursor: not-allowed;
     }
