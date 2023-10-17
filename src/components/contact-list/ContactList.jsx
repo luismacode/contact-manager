@@ -13,8 +13,7 @@ import { useState } from 'react';
 
 const ContactList = () => {
     const [showRowsFormat, setShowRowsFormat] = useState(true);
-    const { filters, filterSetters, paginationSetters, resetFilters } =
-        useFilters();
+    const { filters, dispatchFilters } = useFilters();
     const { contacts, totalContacts, contactHasError, contactIsLoading } =
         useContacts(filters);
     return (
@@ -29,12 +28,14 @@ const ContactList = () => {
                     setShowRowsFormat={setShowRowsFormat}
                 />
             </div>
-            <ContactFormsProvider resetFilters={resetFilters}>
+            <ContactFormsProvider
+                resetFilters={() => dispatchFilters({ type: 'reset' })}
+            >
                 <ContactListFilters
                     search={filters.search}
                     onlyAvailable={filters.onlyAvailable}
                     sortBy={filters.sortBy}
-                    {...filterSetters}
+                    dispatchFilters={dispatchFilters}
                 />
                 <Modal>
                     <ContactFormContainer />
@@ -51,7 +52,7 @@ const ContactList = () => {
             <ContactListPagination
                 page={filters.page}
                 itemsPerPage={filters.itemsPerPage}
-                {...paginationSetters}
+                dispatchFilters={dispatchFilters}
                 totalContacts={totalContacts}
             />
         </div>

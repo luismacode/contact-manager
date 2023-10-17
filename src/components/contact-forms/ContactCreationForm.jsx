@@ -13,7 +13,7 @@ import { ContactFormsContext } from '../../Contexts/ContactFormsContext';
 const ContactCreationForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { onSuccess } = useContext(ContactFormsContext);
-    const { name, email, phone, setName, setEmail, setPhone, isFormInvalid } =
+    const { name, email, phone, dispatchFormData, isFormInvalid } =
         useCreateForm();
     return (
         <form
@@ -28,7 +28,12 @@ const ContactCreationForm = () => {
                 title='type your fullname'
                 value={name.value}
                 error={name.error}
-                onChange={e => setName(e.target.value)}
+                onChange={e =>
+                    dispatchFormData({
+                        type: 'name_changed',
+                        value: e.target.value
+                    })
+                }
                 className='Form-input'
             />
             <InputTextAsync
@@ -39,7 +44,12 @@ const ContactCreationForm = () => {
                 error={email.error}
                 isSuccess={email.value && !email.loading && !email.error}
                 isLoading={email.loading}
-                onChange={e => setEmail(e.target.value)}
+                onChange={e =>
+                    dispatchFormData({
+                        type: 'email_changed',
+                        value: e.target.value
+                    })
+                }
                 className='Form-input'
             />
             <InputTextAsync
@@ -50,7 +60,12 @@ const ContactCreationForm = () => {
                 error={phone.error}
                 isSuccess={phone.value && !phone.loading && !phone.error}
                 isLoading={phone.loading}
-                onChange={e => setPhone(e.target.value)}
+                onChange={e =>
+                    dispatchFormData({
+                        type: 'phone_changed',
+                        value: e.target.value
+                    })
+                }
                 className='Form-input'
             />
             <div className='Form-row'>

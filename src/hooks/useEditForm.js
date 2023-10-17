@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import {
     formatPhone,
     validateEmail,
@@ -10,65 +10,84 @@ import {
     findContactByPhone
 } from '../services/contactsApi';
 
+const formDataReducer = (state, action) => {
+    switch (action.type) {
+        case 'name_changed': {
+            const error = validateName(action.value);
+            return {
+                ...state,
+                name: { value: action.value, error }
+            };
+        }
+        case 'email_changed': {
+            const error = validateEmail(action.value);
+            const isInitial = action.value === action.currentEmail;
+            return {
+                ...state,
+                email: {
+                    value: action.value,
+                    loading: !error && !isInitial,
+                    error
+                }
+            };
+        }
+        case 'phone_changed': {
+            const formatedPhone = formatPhone(action.value);
+            const error = validatePhone(formatedPhone);
+            const isInitial = action.value === action.currentPhone;
+            return {
+                ...state,
+                phone: {
+                    value: formatedPhone,
+                    loading: !error && isInitial,
+                    error
+                }
+            };
+        }
+        case 'role_changed':
+            return {
+                ...state,
+                role: action.value
+            };
+        case 'is_available_changed':
+            return {
+                ...state,
+                isAvailable: action.value
+            };
+        case 'email_error_changed':
+            return {
+                ...state,
+                email: {
+                    value: state.email.value,
+                    error: action.value,
+                    loading: false
+                }
+            };
+        case 'phone_error_changed':
+            return {
+                ...state,
+                phone: {
+                    value: state.phone.value,
+                    error: action.value,
+                    loading: false
+                }
+            };
+        case 'replace':
+            return action.value;
+        default:
+            throw new Error('Invalid action type');
+    }
+};
+
 export const useEditForm = contact => {
-    const [formData, setFormData] = useState(() => getInitialState(contact));
-    const setName = newName => {
-        const error = validateName(newName);
-        setFormData({
-            ...formData,
-            name: { value: newName, error }
-        });
-    };
-    const setEmail = newEmail => {
-        const error = validateEmail(newEmail);
-        const isInitial = newEmail === contact.email;
-        setFormData({
-            ...formData,
-            email: { value: newEmail, loading: !error && !isInitial, error }
-        });
-    };
-    const setPhone = newPhone => {
-        const formatedPhone = formatPhone(newPhone);
-        const error = validatePhone(formatedPhone);
-        const isInitial = newPhone === contact.phone;
-        setFormData({
-            ...formData,
-            phone: { value: formatedPhone, loading: !error && isInitial, error }
-        });
-    };
-    const setRole = newRole => {
-        setFormData({
-            ...formData,
-            role: newRole
-        });
-    };
-    const setIsAvailable = newIsAvailable => {
-        setFormData({
-            ...formData,
-            isAvailable: newIsAvailable
-        });
-    };
-    const setEmailError = error =>
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            email: {
-                value: prevFormData.email.value,
-                error,
-                loading: false
-            }
-        }));
-    const setPhoneError = error =>
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            phone: {
-                value: prevFormData.phone.value,
-                error,
-                loading: false
-            }
-        }));
+    const [formData, dispatchFormData] = useReducer(
+        formDataReducer,
+        contact,
+        getInitialState
+    );
 
     useEffect(() => {
-        setFormData(getInitialState(contact));
+        dispatchFormData({ type: 'replace', value: getInitialState(contact) });
     }, [contact]);
     useEffect(() => {
         if (!formData.email.loading) return;
@@ -77,7 +96,7 @@ export const useEditForm = contact => {
             () =>
                 validateEmailIsAvailable(
                     formData.email.value,
-                    setEmailError,
+                    dispatchFormData,
                     controller.signal
                 ),
             500
@@ -96,7 +115,7 @@ export const useEditForm = contact => {
             () =>
                 validatePhoneIsAvailable(
                     formData.phone.value,
-                    setPhoneError,
+                    dispatchFormData,
                     controller.signal
                 ),
             500
@@ -116,11 +135,7 @@ export const useEditForm = contact => {
         formData.email.loading;
     return {
         ...formData,
-        setName,
-        setEmail,
-        setPhone,
-        setRole,
-        setIsAvailable,
+        dispatchFormData,
         isFormInvalid
     };
 };
@@ -151,27 +166,35 @@ const areInitialValues = (formData, contact) =>
     formData.role === contact.role &&
     formData.isAvailable === contact.isAvailable;
 
-const validateEmailIsAvailable = async (email, setEmailError, signal) => {
+const validateEmailIsAvailable = async (email, dispatchFormData, signal) => {
     const { contact, hasError, isAborted } = await findContactByEmail(
         email,
         signal
     );
     if (isAborted) return;
     if (hasError)
-        return setEmailError(
-            'An error occurred while the email was being validated'
-        );
-    setEmailError(contact ? 'Email is already in use' : undefined);
+        return dispatchFormData({
+            type: 'email_error_changed',
+            value: 'An error occurred while the email was being validated'
+        });
+    dispatchFormData({
+        type: 'email_error_changed',
+        value: contact ? 'Email is already in use' : undefined
+    });
 };
-const validatePhoneIsAvailable = async (phone, setPhoneError, signal) => {
+const validatePhoneIsAvailable = async (phone, dispatchFormData, signal) => {
     const { contact, hasError, isAborted } = await findContactByPhone(
         phone,
         signal
     );
     if (isAborted) return;
     if (hasError)
-        return setPhoneError(
-            'An error occurred while the email was being validated'
-        );
-    setPhoneError(contact ? 'Email is already in use' : undefined);
+        return dispatchFormData({
+            type: 'phone_error_changed',
+            value: 'An error occurred while the email was being validated'
+        });
+    dispatchFormData({
+        type: 'phone_error_changed',
+        value: contact ? 'Email is already in use' : undefined
+    });
 };
