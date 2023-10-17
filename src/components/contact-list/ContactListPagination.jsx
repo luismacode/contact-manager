@@ -5,15 +5,19 @@ import './ContactListPagination.scss';
 const ContactListPagination = ({
     page,
     itemsPerPage,
-    setPage,
-    setItemsPerPage,
-    totalContacts
+    totalContacts,
+    dispatchFilters
 }) => (
     <div className='ContactListPagination'>
         <div className='ContactListPagination-itemsPerPage'>
             <Select
                 value={itemsPerPage}
-                onChange={e => setItemsPerPage(Number(e.target.value))}
+                onChange={e =>
+                    dispatchFilters({
+                        type: 'items_per_page_changed',
+                        value: Number(e.target.value)
+                    })
+                }
                 title='pagination'
                 className='ContactListPagination-select'
             >
@@ -27,7 +31,9 @@ const ContactListPagination = ({
         </div>
         <PageSelector
             page={page}
-            setPage={setPage}
+            setPage={newPage =>
+                dispatchFilters({ type: 'page_changed', value: newPage })
+            }
             totalPages={Math.ceil(totalContacts / itemsPerPage)}
         />
     </div>

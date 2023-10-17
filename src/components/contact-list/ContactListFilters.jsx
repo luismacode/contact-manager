@@ -11,9 +11,7 @@ const ContactListFilters = ({
     search,
     onlyAvailable,
     sortBy,
-    setSearch,
-    setOnlyAvailable,
-    setSortBy
+    dispatchFilters
 }) => {
     const { setCreateForm } = useContext(ContactFormsContext);
     return (
@@ -21,13 +19,23 @@ const ContactListFilters = ({
             <InputSearch
                 placeholder='Search...'
                 value={search}
-                onChange={e => setSearch(e.target.value)}
+                onChange={e =>
+                    dispatchFilters({
+                        type: 'search_changed',
+                        value: e.target.value
+                    })
+                }
                 title='Search by name'
             />
             <Select
                 className='Filters-select'
                 value={sortBy}
-                onChange={e => setSortBy(Number(e.target.value))}
+                onChange={e =>
+                    dispatchFilters({
+                        type: 'sort_by_changed',
+                        value: Number(e.target.value)
+                    })
+                }
                 title='sort by '
             >
                 <option value={SORTOPTIONS.DEFAULT}>by default</option>
@@ -42,7 +50,12 @@ const ContactListFilters = ({
                     <InputCheckbox
                         className='Filters-checkbox'
                         checked={onlyAvailable}
-                        onChange={e => setOnlyAvailable(e.target.checked)}
+                        onChange={e =>
+                            dispatchFilters({
+                                type: 'only_available_changed',
+                                value: e.target.checked
+                            })
+                        }
                         title='filter only Availables'
                     />
                     <p>Availables</p>

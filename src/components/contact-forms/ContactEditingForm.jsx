@@ -12,21 +12,16 @@ import { ContactFormsContext } from '../../Contexts/ContactFormsContext';
 
 const ContactEditingForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { currentContact: contact, onSuccess } =
-        useContext(ContactFormsContext);
+    const { currentContact, onSuccess } = useContext(ContactFormsContext);
     const {
         name,
         email,
         phone,
         role,
         isAvailable,
-        setName,
-        setEmail,
-        setPhone,
-        setRole,
-        setIsAvailable,
+        dispatchFormData,
         isFormInvalid
-    } = useEditForm(contact);
+    } = useEditForm(currentContact);
     return (
         <form
             className='Form'
@@ -34,7 +29,7 @@ const ContactEditingForm = () => {
                 handleSubmit(
                     ev,
                     {
-                        id: contact.id,
+                        id: currentContact.id,
                         name: name.value,
                         email: email.value,
                         phone: phone.value,
@@ -52,7 +47,12 @@ const ContactEditingForm = () => {
                 title='type your fullname'
                 value={name.value}
                 error={name.error}
-                onChange={e => setName(e.target.value)}
+                onChange={e =>
+                    dispatchFormData({
+                        type: 'name_changed',
+                        value: e.target.value
+                    })
+                }
                 className='Form-input'
             />
             <InputTextAsync
@@ -62,12 +62,18 @@ const ContactEditingForm = () => {
                 value={email.value}
                 error={email.error}
                 isSuccess={
-                    email.value !== contact.email &&
+                    email.value !== currentContact.email &&
                     !email.loading &&
                     !email.error
                 }
                 isLoading={email.loading}
-                onChange={e => setEmail(e.target.value)}
+                onChange={e =>
+                    dispatchFormData({
+                        type: 'email_changed',
+                        value: e.target.value,
+                        currentEmail: currentContact.email
+                    })
+                }
                 className='Form-input'
             />
             <InputTextAsync
@@ -77,19 +83,30 @@ const ContactEditingForm = () => {
                 value={phone.value}
                 error={phone.error}
                 isSuccess={
-                    phone.value !== contact.phone &&
+                    phone.value !== currentContact.phone &&
                     !phone.loading &&
                     !phone.error
                 }
                 isLoading={phone.loading}
-                onChange={e => setPhone(e.target.value)}
+                onChange={e =>
+                    dispatchFormData({
+                        type: 'phone_changed',
+                        value: e.target.value,
+                        currentPhone: currentContact.phone
+                    })
+                }
                 className='Form-input'
             />
             <div className='Form-row'>
                 <Select
                     title='Select Role'
                     value={role}
-                    onChange={ev => setRole(ev.target.value)}
+                    onChange={ev =>
+                        dispatchFormData({
+                            type: 'role_changed',
+                            value: ev.target.value
+                        })
+                    }
                     className='Form-select'
                 >
                     <option value={CONTACT_ROLES.CUSTOMER}>customer</option>
@@ -101,7 +118,12 @@ const ContactEditingForm = () => {
                     <InputCheckbox
                         title='Set Available'
                         checked={isAvailable}
-                        onChange={ev => setIsAvailable(ev.target.checked)}
+                        onChange={ev =>
+                            dispatchFormData({
+                                type: 'is_available_changed',
+                                value: ev.target.checked
+                            })
+                        }
                     />
                     <span>Available?</span>
                 </div>
