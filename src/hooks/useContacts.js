@@ -29,7 +29,7 @@ export const useContacts = filters => {
         contacts: contacts.data,
         totalContacts: contacts.count,
         contactHasError: contacts.hasError,
-        ContactIsLoading: contacts.isLoading
+        contactIsLoading: contacts.isLoading
     };
 };
 

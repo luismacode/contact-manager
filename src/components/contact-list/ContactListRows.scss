@@ -1,4 +1,6 @@
 @use '../../scss/abstracts/mixins.scss' as mix;
+@use '../../scss/abstracts/variables.scss' as var;
+@use 'sass:map';
 
 .ContactListRows {
     @include mix.responsive(md) {
@@ -12,7 +14,21 @@
     display: flex;
     justify-content: center;
     &-icon {
+        margin-right: 1rem;
         width: 2rem;
         height: 2rem;
+        &--animate {
+            @include mix.animate(rotateicon, 1s, linear, 5);
+        }
+    }
+    &-error {
+        color: map.get($map: var.$colors, $key: color-red);
+    }
+    &-loading {
+        display: inline-flex;
+        color: map.get($map: var.$colors, $key: color-orange);
+    }
+    &-empty {
+        color: map.get($map: var.$colors, $key: color-gray);
     }
 }

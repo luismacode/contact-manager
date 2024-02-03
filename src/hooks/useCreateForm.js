@@ -1,6 +1,5 @@
 import { useEffect, useReducer } from 'react';
 import {
-    formatPhone,
     validateEmail,
     validateName,
     validatePhone
@@ -27,11 +26,10 @@ const formDataReducer = (state, action) => {
             };
         }
         case 'phone_changed': {
-            const formatedPhone = formatPhone(action.value);
-            const error = validatePhone(formatedPhone);
+            const error = validatePhone(action.value);
             return {
                 ...state,
-                phone: { value: formatedPhone, loading: !error, error }
+                phone: { value: action.value, loading: !error, error }
             };
         }
         case 'email_error_changed':
@@ -152,10 +150,10 @@ const validatePhoneIsAvailable = async (phone, dispatchFormData, signal) => {
     if (hasError)
         return dispatchFormData({
             type: 'phone_error_changed',
-            value: 'An error occurred while the email was being validated'
+            value: 'An error occurred while the phone was being validated'
         });
     dispatchFormData({
         type: 'phone_error_changed',
-        value: contact ? 'Email is already in use' : undefined
+        value: contact ? 'Phone is already in use' : undefined
     });
 };

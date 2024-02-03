@@ -1,6 +1,5 @@
 import { useEffect, useReducer } from 'react';
 import {
-    formatPhone,
     validateEmail,
     validateName,
     validatePhone
@@ -32,13 +31,12 @@ const formDataReducer = (state, action) => {
             };
         }
         case 'phone_changed': {
-            const formatedPhone = formatPhone(action.value);
-            const error = validatePhone(formatedPhone);
+            const error = validatePhone(action.value);
             const isInitial = action.value === action.currentPhone;
             return {
                 ...state,
                 phone: {
-                    value: formatedPhone,
+                    value: action.value,
                     loading: !error && isInitial,
                     error
                 }

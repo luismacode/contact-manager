@@ -4,21 +4,33 @@ import ContactCard from './ContactCard';
 import UpdateIcon from '../icons/UpdateIcon';
 import CrossCircleIcon from '../icons/CrossCircleIcon';
 const ContactListRows = ({ contacts, hasError, isLoading, showRowsFormat }) => {
+    console.log(isLoading);
     if (hasError)
         return (
             <p className='ContactListAlert'>
-                <CrossCircleIcon className='ContactListAlert-icon' />
-                Error loading contacts
+                <span className='ContactListAlert-error'>
+                    <CrossCircleIcon className='ContactListAlert-icon' /> Oops,
+                    something went wrong
+                </span>
             </p>
         );
     if (isLoading)
         return (
             <p className='ContactListAlert'>
-                <UpdateIcon className='ContactListAlert-icon' /> Loading
+                <span className='ContactListAlert-loading'>
+                    <UpdateIcon className='ContactListAlert-icon ContactListAlert-icon--animate' />
+                    Loading
+                </span>
             </p>
         );
     if (!contacts.length)
-        return <p className='ContactListAlert'>No contacts</p>;
+        return (
+            <p className='ContactListAlert'>
+                <span className='ContactListAlert-empty'>
+                    No contacts have been loaded
+                </span>
+            </p>
+        );
     const ContactComponent = showRowsFormat ? ContactRow : ContactCard;
     return (
         <div className='ContactListRows'>

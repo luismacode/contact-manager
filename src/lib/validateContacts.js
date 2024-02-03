@@ -3,9 +3,7 @@ const REGEX = {
     START_WITH_NUMBER: /^[0-9]/,
     EMAIL: /^[a-z0-9._]+@(gmail|hotmail|yahoo).com$/,
     START_PREFIX_VALID: /^(\+51)/,
-    PHONE: /\+51[0-9\s]+/,
-    WHITESPACES: /\s/g,
-    WHITESPACES_EACH_THREE_CHAR: /(\+51|[0-9]{3})/g
+    PHONE: /^\+51\s\d{3}\s\d{3}\s\d{3}$/
 };
 
 export const validateName = name => {
@@ -25,16 +23,8 @@ export const validateEmail = email => {
 export const validatePhone = phone => {
     if (!REGEX.START_PREFIX_VALID.test(phone))
         return 'phone number format start with (+51)';
-    if (!REGEX.PHONE.test(phone))
-        return 'From here type only numbers without whitespaces';
+    if (!REGEX.PHONE.test(phone)) return 'phone not valid';
     if (phone.length !== 15) {
         return 'Length not valid ';
     }
-};
-
-export const formatPhone = phone => {
-    return phone
-        .replace(REGEX.WHITESPACES, '')
-        .replace(REGEX.WHITESPACES_EACH_THREE_CHAR, '$1 ')
-        .trimEnd();
 };
