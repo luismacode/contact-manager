@@ -1,7 +1,6 @@
 import UsersIcon from '../icons/UsersIcon';
 import ContactListFilters from './ContactListFilters';
 import ContactListRows from './ContactListRows';
-import { useFilters } from '../../hooks/useFilters';
 import './ContactList.scss';
 import ContactListPagination from './ContactListPagination';
 import { useContacts } from '../../hooks/useContacts';
@@ -9,11 +8,18 @@ import ContactFormContainer from '../contact-forms/ContactFormContainer';
 import Modal from '../modal/Modal';
 import ContactFormsProvider from '../providers/ContactFormsProvider';
 import ContactListViewSelector from './ContactListViewSelector';
-import { useState } from 'react';
+import { useState, useReducer } from 'react';
+import {
+    FILTERS_INITIAL_STATE,
+    filtersReducer
+} from '../../reducers/filtersReducer';
 
 const ContactList = () => {
     const [showRowsFormat, setShowRowsFormat] = useState(true);
-    const { filters, dispatchFilters } = useFilters();
+    const [filters, dispatchFilters] = useReducer(
+        filtersReducer,
+        FILTERS_INITIAL_STATE
+    );
     const { contacts, totalContacts, contactHasError, contactIsLoading } =
         useContacts(filters);
     return (
