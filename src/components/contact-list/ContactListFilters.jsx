@@ -7,6 +7,11 @@ import IconButton from '../buttons/IconButton';
 import { useContext } from 'react';
 import { ContactFormsContext } from '../../Contexts/ContactFormsContext';
 import AddContactIcon from '../icons/addContactIcon';
+import {
+    onlyAvailableChanged,
+    searchChanged,
+    sortByChanged
+} from '../../actions/filtersAction';
 const ContactListFilters = ({
     search,
     onlyAvailable,
@@ -19,22 +24,14 @@ const ContactListFilters = ({
             <InputSearch
                 placeholder='Search...'
                 value={search}
-                onChange={e =>
-                    dispatchFilters({
-                        type: 'search_changed',
-                        value: e.target.value
-                    })
-                }
+                onChange={e => dispatchFilters(searchChanged(e.target.value))}
                 title='Search by name'
             />
             <Select
                 className='Filters-select'
                 value={sortBy}
                 onChange={e =>
-                    dispatchFilters({
-                        type: 'sort_by_changed',
-                        value: Number(e.target.value)
-                    })
+                    dispatchFilters(sortByChanged(Number(e.target.value)))
                 }
                 title='sort by '
             >
@@ -51,10 +48,9 @@ const ContactListFilters = ({
                         className='Filters-checkbox'
                         checked={onlyAvailable}
                         onChange={e =>
-                            dispatchFilters({
-                                type: 'only_available_changed',
-                                value: e.target.checked
-                            })
+                            dispatchFilters(
+                                onlyAvailableChanged(e.target.checked)
+                            )
                         }
                         title='filter only Availables'
                     />

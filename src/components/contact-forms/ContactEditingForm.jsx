@@ -9,6 +9,13 @@ import { useEditForm } from '../../hooks/useEditForm';
 import { useState, useContext } from 'react';
 import { updateContact } from '../../services/contactsApi';
 import { ContactFormsContext } from '../../Contexts/ContactFormsContext';
+import {
+    availableChanged,
+    emailChanged,
+    nameChanged,
+    phoneChanged,
+    roleChanged
+} from '../../actions/editFormAction';
 
 const ContactEditingForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,9 +32,9 @@ const ContactEditingForm = () => {
     return (
         <form
             className='Form'
-            onSubmit={ev =>
+            onSubmit={e =>
                 handleSubmit(
-                    ev,
+                    e,
                     {
                         id: currentContact.id,
                         name: name.value,
@@ -47,12 +54,7 @@ const ContactEditingForm = () => {
                 title='type your fullname'
                 value={name.value}
                 error={name.error}
-                onChange={e =>
-                    dispatchFormData({
-                        type: 'name_changed',
-                        value: e.target.value
-                    })
-                }
+                onChange={e => dispatchFormData(nameChanged(e.target.value))}
                 className='Form-input'
             />
             <InputTextAsync
@@ -68,11 +70,9 @@ const ContactEditingForm = () => {
                 }
                 isLoading={email.loading}
                 onChange={e =>
-                    dispatchFormData({
-                        type: 'email_changed',
-                        value: e.target.value,
-                        currentEmail: currentContact.email
-                    })
+                    dispatchFormData(
+                        emailChanged(e.target.value, currentContact.email)
+                    )
                 }
                 className='Form-input'
             />
@@ -89,11 +89,9 @@ const ContactEditingForm = () => {
                 }
                 isLoading={phone.loading}
                 onChange={e =>
-                    dispatchFormData({
-                        type: 'phone_changed',
-                        value: e.target.value,
-                        currentPhone: currentContact.phone
-                    })
+                    dispatchFormData(
+                        phoneChanged(e.target.value, currentContact.phone)
+                    )
                 }
                 className='Form-input'
             />
@@ -101,11 +99,8 @@ const ContactEditingForm = () => {
                 <Select
                     title='Select Role'
                     value={role}
-                    onChange={ev =>
-                        dispatchFormData({
-                            type: 'role_changed',
-                            value: ev.target.value
-                        })
+                    onChange={e =>
+                        dispatchFormData(roleChanged(e.target.value))
                     }
                     className='Form-select'
                 >
@@ -118,11 +113,8 @@ const ContactEditingForm = () => {
                     <InputCheckbox
                         title='Set Available'
                         checked={isAvailable}
-                        onChange={ev =>
-                            dispatchFormData({
-                                type: 'is_available_changed',
-                                value: ev.target.checked
-                            })
+                        onChange={e =>
+                            dispatchFormData(availableChanged(e.target.checked))
                         }
                     />
                     <span>Available?</span>
@@ -139,8 +131,8 @@ const ContactEditingForm = () => {
     );
 };
 
-const handleSubmit = async (ev, contact, setIsSubmitting, onSuccess) => {
-    ev.preventDefault();
+const handleSubmit = async (e, contact, setIsSubmitting, onSuccess) => {
+    e.preventDefault();
     setIsSubmitting(true);
     const success = await updateContact(contact);
     if (success) {

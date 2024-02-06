@@ -7,6 +7,11 @@ import {
     editFormReducer,
     getEditFormInitialState
 } from '../reducers/editFormReducer';
+import {
+    emailErrorChanged,
+    phoneErrorChanged,
+    replace
+} from '../actions/editFormAction';
 
 export const useEditForm = contact => {
     const [formData, dispatchFormData] = useReducer(
@@ -16,10 +21,7 @@ export const useEditForm = contact => {
     );
 
     useEffect(() => {
-        dispatchFormData({
-            type: 'replace',
-            value: getEditFormInitialState(contact)
-        });
+        dispatchFormData(replace(getEditFormInitialState(contact)));
     }, [contact]);
     useEffect(() => {
         if (!formData.email.loading) return;
@@ -85,15 +87,11 @@ const validateEmailIsAvailable = async (email, dispatchFormData, signal) => {
         signal
     );
     if (isAborted) return;
+    let errorMessage;
     if (hasError)
-        return dispatchFormData({
-            type: 'email_error_changed',
-            value: 'An error occurred while the email was being validated'
-        });
-    dispatchFormData({
-        type: 'email_error_changed',
-        value: contact ? 'Email is already in use' : undefined
-    });
+        errorMessage = 'An error occurred while the email was being validated';
+    else if (contact) errorMessage = 'Email is already in use';
+    dispatchFormData(emailErrorChanged(errorMessage));
 };
 const validatePhoneIsAvailable = async (phone, dispatchFormData, signal) => {
     const { contact, hasError, isAborted } = await findContactByPhone(
@@ -101,13 +99,9 @@ const validatePhoneIsAvailable = async (phone, dispatchFormData, signal) => {
         signal
     );
     if (isAborted) return;
+    let errorMessage;
     if (hasError)
-        return dispatchFormData({
-            type: 'phone_error_changed',
-            value: 'An error occurred while the email was being validated'
-        });
-    dispatchFormData({
-        type: 'phone_error_changed',
-        value: contact ? 'Email is already in use' : undefined
-    });
+        errorMessage = 'An error occurred while the email was being validated';
+    else if (contact) errorMessage = 'Email is already in use';
+    dispatchFormData(phoneErrorChanged(errorMessage));
 };

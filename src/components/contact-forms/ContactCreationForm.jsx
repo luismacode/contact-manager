@@ -9,6 +9,11 @@ import { useCreateForm } from '../../hooks/useCreateForm';
 import { useState, useContext } from 'react';
 import { createContact } from '../../services/contactsApi';
 import { ContactFormsContext } from '../../Contexts/ContactFormsContext';
+import {
+    emailChanged,
+    nameChanged,
+    phoneChanged
+} from '../../actions/createFormAction';
 
 const ContactCreationForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,8 +23,8 @@ const ContactCreationForm = () => {
     return (
         <form
             className='Form'
-            onSubmit={ev =>
-                handleSubmit(ev, name, email, phone, setIsSubmitting, onSuccess)
+            onSubmit={e =>
+                handleSubmit(e, name, email, phone, setIsSubmitting, onSuccess)
             }
         >
             <InputText
@@ -28,12 +33,7 @@ const ContactCreationForm = () => {
                 title='type your fullname'
                 value={name.value}
                 error={name.error}
-                onChange={e =>
-                    dispatchFormData({
-                        type: 'name_changed',
-                        value: e.target.value
-                    })
-                }
+                onChange={e => dispatchFormData(nameChanged(e.target.value))}
                 className='Form-input'
             />
             <InputTextAsync
@@ -44,12 +44,7 @@ const ContactCreationForm = () => {
                 error={email.error}
                 isSuccess={email.value && !email.loading && !email.error}
                 isLoading={email.loading}
-                onChange={e =>
-                    dispatchFormData({
-                        type: 'email_changed',
-                        value: e.target.value
-                    })
-                }
+                onChange={e => dispatchFormData(emailChanged(e.target.value))}
                 className='Form-input'
             />
             <InputTextAsync
@@ -60,12 +55,7 @@ const ContactCreationForm = () => {
                 error={phone.error}
                 isSuccess={phone.value && !phone.loading && !phone.error}
                 isLoading={phone.loading}
-                onChange={e =>
-                    dispatchFormData({
-                        type: 'phone_changed',
-                        value: e.target.value
-                    })
-                }
+                onChange={e => dispatchFormData(phoneChanged(e.target.value))}
                 className='Form-input'
             />
             <div className='Form-row'>
@@ -93,19 +83,19 @@ const ContactCreationForm = () => {
 };
 
 const handleSubmit = async (
-    ev,
+    e,
     name,
     email,
     phone,
     setIsSubmitting,
     onSuccess
 ) => {
-    ev.preventDefault();
+    e.preventDefault();
     const contact = {
         id: crypto.randomUUID(),
         name: name.value,
-        isAvailable: ev.target.available.checked,
-        role: ev.target.role.value,
+        isAvailable: e.target.available.checked,
+        role: e.target.role.value,
         email: email.value,
         phone: phone.value
     };

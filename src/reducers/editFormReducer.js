@@ -1,3 +1,4 @@
+import { EDIT_FORM_ACTION } from '../constants/editFormAction';
 import {
     validateEmail,
     validateName,
@@ -23,69 +24,67 @@ export const getEditFormInitialState = contact => ({
     isAvailable: contact.isAvailable
 });
 
-export const editFormReducer = (state, action) => {
-    switch (action.type) {
-        case 'name_changed': {
-            const error = validateName(action.value);
+export const editFormReducer = (state, { type, payload }) => {
+    switch (type) {
+        case EDIT_FORM_ACTION.NAME: {
+            const error = validateName(payload);
             return {
                 ...state,
-                name: { value: action.value, error }
+                name: { value: payload, error }
             };
         }
-        case 'email_changed': {
-            const error = validateEmail(action.value);
-            const isInitial = action.value === action.currentEmail;
+        case EDIT_FORM_ACTION.EMAIL: {
+            const error = validateEmail(payload.email);
             return {
                 ...state,
                 email: {
-                    value: action.value,
-                    loading: !error && !isInitial,
+                    value: payload.email,
+                    loading: !error && !payload.isInitial,
                     error
                 }
             };
         }
-        case 'phone_changed': {
-            const error = validatePhone(action.value);
-            const isInitial = action.value === action.currentPhone;
+        case EDIT_FORM_ACTION.PHONE: {
+            const error = validatePhone(payload.phone);
             return {
                 ...state,
                 phone: {
-                    value: action.value,
-                    loading: !error && isInitial,
+                    value: payload.phone,
+                    loading: !error && !payload.isInitial,
                     error
                 }
             };
         }
-        case 'role_changed':
+        case EDIT_FORM_ACTION.ROLE:
             return {
                 ...state,
-                role: action.value
+                role: payload
             };
-        case 'is_available_changed':
+        case EDIT_FORM_ACTION.AVAILABLE:
             return {
                 ...state,
-                isAvailable: action.value
+                isAvailable: payload
             };
-        case 'email_error_changed':
+        case EDIT_FORM_ACTION.EMAIL_ERROR:
             return {
                 ...state,
                 email: {
                     value: state.email.value,
-                    error: action.value,
+                    error: payload,
                     loading: false
                 }
             };
-        case 'phone_error_changed':
+        case EDIT_FORM_ACTION.PHONE_ERROR:
             return {
                 ...state,
                 phone: {
                     value: state.phone.value,
-                    error: action.value,
+                    error: payload,
                     loading: false
                 }
             };
-        case 'replace':
-            return action.value;
+        case EDIT_FORM_ACTION.REPLACE:
+            return payload;
         default:
             throw new Error('Invalid action type');
     }

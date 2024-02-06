@@ -7,6 +7,10 @@ import {
     CREATE_FORM_INITIAL_STATE,
     createFormReducer
 } from '../reducers/createFormReducer';
+import {
+    emailErrorChanged,
+    phoneErrorChanged
+} from '../actions/createFormAction';
 
 export const useCreateForm = () => {
     const [formData, dispatchFormData] = useReducer(
@@ -72,15 +76,11 @@ const validateEmailIsAvailable = async (email, dispatchFormData, signal) => {
         signal
     );
     if (isAborted) return;
+    let errorMessage;
     if (hasError)
-        return dispatchFormData({
-            type: 'email_error_changed',
-            value: 'An error occurred while the email was being validated'
-        });
-    dispatchFormData({
-        type: 'email_error_changed',
-        value: contact ? 'Email is already in use' : undefined
-    });
+        errorMessage = 'An error occurred while the email was being validated';
+    else if (contact) errorMessage = 'Email is already in use';
+    dispatchFormData(emailErrorChanged(errorMessage));
 };
 const validatePhoneIsAvailable = async (phone, dispatchFormData, signal) => {
     const { contact, hasError, isAborted } = await findContactByPhone(
@@ -88,13 +88,9 @@ const validatePhoneIsAvailable = async (phone, dispatchFormData, signal) => {
         signal
     );
     if (isAborted) return;
+    let errorMessage;
     if (hasError)
-        return dispatchFormData({
-            type: 'phone_error_changed',
-            value: 'An error occurred while the phone was being validated'
-        });
-    dispatchFormData({
-        type: 'phone_error_changed',
-        value: contact ? 'Phone is already in use' : undefined
-    });
+        errorMessage = 'An error occurred while the phone was being validated';
+    else if (contact) errorMessage = 'Phone is already in use';
+    dispatchFormData(phoneErrorChanged(errorMessage));
 };

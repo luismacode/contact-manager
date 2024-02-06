@@ -13,6 +13,7 @@ import {
     FILTERS_INITIAL_STATE,
     filtersReducer
 } from '../../reducers/filtersReducer';
+import { reset } from '../../actions/filtersAction';
 
 const ContactList = () => {
     const [showRowsFormat, setShowRowsFormat] = useState(true);
@@ -34,9 +35,7 @@ const ContactList = () => {
                     setShowRowsFormat={setShowRowsFormat}
                 />
             </div>
-            <ContactFormsProvider
-                resetFilters={() => dispatchFilters({ type: 'reset' })}
-            >
+            <ContactFormsProvider resetFilters={() => dispatchFilters(reset())}>
                 <ContactListFilters
                     search={filters.search}
                     onlyAvailable={filters.onlyAvailable}

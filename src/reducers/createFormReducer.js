@@ -1,3 +1,4 @@
+import { CREATE_FORM_ACTION } from '../constants/createFormAction';
 import {
     validateEmail,
     validateName,
@@ -21,45 +22,45 @@ export const CREATE_FORM_INITIAL_STATE = {
     }
 };
 
-export const createFormReducer = (state, action) => {
-    switch (action.type) {
-        case 'name_changed': {
-            const error = validateName(action.value);
+export const createFormReducer = (state, { type, payload }) => {
+    switch (type) {
+        case CREATE_FORM_ACTION.NAME: {
+            const error = validateName(payload);
             return {
                 ...state,
-                name: { value: action.value, error }
+                name: { value: payload, error }
             };
         }
-        case 'email_changed': {
-            const error = validateEmail(action.value);
+        case CREATE_FORM_ACTION.EMAIL: {
+            const error = validateEmail(payload);
             return {
                 ...state,
-                email: { value: action.value, loading: !error, error }
+                email: { value: payload, loading: !error, error }
             };
         }
-        case 'phone_changed': {
-            const error = validatePhone(action.value);
+        case CREATE_FORM_ACTION.PHONE: {
+            const error = validatePhone(payload);
             return {
                 ...state,
-                phone: { value: action.value, loading: !error, error }
+                phone: { value: payload, loading: !error, error }
             };
         }
-        case 'email_error_changed':
+        case CREATE_FORM_ACTION.EMAIL_ERROR:
             return {
                 ...state,
                 email: {
                     value: state.email.value,
-                    error: action.value,
+                    error: payload,
                     loading: false
                 }
             };
 
-        case 'phone_error_changed':
+        case CREATE_FORM_ACTION.PHONE_ERROR:
             return {
                 ...state,
                 phone: {
                     value: state.phone.value,
-                    error: action.value,
+                    error: payload,
                     loading: false
                 }
             };

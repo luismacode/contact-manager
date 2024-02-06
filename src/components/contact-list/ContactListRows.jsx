@@ -4,7 +4,6 @@ import ContactCard from './ContactCard';
 import UpdateIcon from '../icons/UpdateIcon';
 import CrossCircleIcon from '../icons/CrossCircleIcon';
 const ContactListRows = ({ contacts, hasError, isLoading, showRowsFormat }) => {
-    console.log(isLoading);
     if (hasError)
         return (
             <p className='ContactListAlert'>

@@ -1,3 +1,4 @@
+import { itemsPerPageChanged, pageChanged } from '../../actions/filtersAction';
 import { PAGINATION } from '../../constants/pagination';
 import PageSelector from '../forms/PageSelector';
 import Select from '../forms/Select';
@@ -13,10 +14,7 @@ const ContactListPagination = ({
             <Select
                 value={itemsPerPage}
                 onChange={e =>
-                    dispatchFilters({
-                        type: 'items_per_page_changed',
-                        value: Number(e.target.value)
-                    })
+                    dispatchFilters(itemsPerPageChanged(Number(e.target.value)))
                 }
                 title='pagination'
                 className='ContactListPagination-select'
@@ -31,9 +29,7 @@ const ContactListPagination = ({
         </div>
         <PageSelector
             page={page}
-            setPage={newPage =>
-                dispatchFilters({ type: 'page_changed', value: newPage })
-            }
+            setPage={newPage => dispatchFilters(pageChanged(newPage))}
             totalPages={Math.ceil(totalContacts / itemsPerPage)}
         />
     </div>
